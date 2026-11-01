@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-web-app
+  namespace: target-apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-server
+  template:
+    metadata:
+      labels:
+        app: web-server
+    spec:
+      containers:
+      - name: application
+        image: nginx:alpine # Placeholder image that ArgoCD will run
+        ports:
+        - containerPort: 8080
