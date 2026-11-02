@@ -21,7 +21,7 @@ kubectl apply -f argocd-apps/
 
 ## 🌟 Core AWS SAA-C03 Architectural Alignments Demonstrated
 * **Decoupled Architecture:** Strict logical separation between continuous integration pipelines and continuous delivery states.
-* **High Availability Configuration:** Dynamic vertical scale adjustments targetin
+* **High Availability Configuration:** Dynamic vertical scale adjustments targeting and production environments dynamically without code duplication.
 
 
 
