@@ -11,3 +11,12 @@ argo-gitops-enterprise/
     │   └── kustomization.yaml
     └── prod/
         └── kustomization.yaml
+
+
+
+
+
+
+
+
+
