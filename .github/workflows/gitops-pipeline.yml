@@ -1,0 +1,40 @@
+name: Continuous Integration & GitOps Trigger
+
+# 1. Fire this script immediately when code is pushed to the main branch
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 2. Extract the code inside this repository onto the clean worker runner
+    - name: Checkout Application Code
+      uses: actions/checkout@v4
+
+    # 3. Simulate building the Docker image using the Dockerfile recipe
+    - name: Build Application Container
+      run: |
+        echo "Building image version: ${{ github.sha }}"
+        docker build -t ${{ github.repository_owner }}/argo-demo-app:${{ github.sha }} .
+
+    # 4. Update the GitOps Configuration Repository dynamically using Kustomize
+    - name: Sync and Patch GitOps Overlay Image
+      run: |
+        # Set up a secure system user identity for the runner bot
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@://github.com"
+        
+        # Clone your brand new infrastructure config repo securely using a secret token
+        git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@://github.com{{ github.repository_owner }}/argo-gitops-enterprise.git
+        cd argo-gitops-enterprise
+        
+        # Use a stream editor (sed) to locate and update the image marker with the exact Git Commit SHA 
+        sed -i "s|image: .*|image: ${{ github.repository_owner }}/argo-demo-app:${{ github.sha }}|g" base/deployment.yaml
+        
+        # Capture the change, save it to the Git log timeline, and push it to GitHub
+        git add base/deployment.yaml
+        git commit -m "chore(cd): automated rollout release tag ${{ github.sha }} [skip ci]"
+        git push
