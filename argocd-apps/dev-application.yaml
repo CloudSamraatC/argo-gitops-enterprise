@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: enterprise-app-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/CloudSamraatC/argo-gitops-enterprise' #  K8s manifest 
+    targetRevision: HEAD
+    path: envs/dev # Points ArgoCD to the Dev Kustomize overlay
+  destination:
+    server: 'https://default.svc'
+    namespace: target-apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    createNamespace: true # Automatically builds the 'target-apps' namespace if it doesn't exist
