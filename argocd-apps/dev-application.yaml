@@ -16,4 +16,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    CreateNamespace: true # Automatically builds the 'target-apps' namespace if it doesn't exist
+  CreateNamespace: true # Automatically builds the 'target-apps' namespace if it doesn't exist
