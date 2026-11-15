@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: envs/dev # Points ArgoCD to the Dev Kustomize overlay
   destination:
-    server: 'https://default.svc'
+    server: 'https://kubernetes.default.svc'
     namespace: target-apps
   syncPolicy:
     automated:
