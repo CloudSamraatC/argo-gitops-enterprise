@@ -32,6 +32,11 @@ graph TD
 
 This repository serves as the **Declarative Single Source of Truth** for a multi-environment Kubernetes infrastructure deployment. It utilizes **Kustomize** to manage variations across testing and production environments dynamically without code duplication.
 
+## 📸 Live Argo CD Reconciliation Proof
+
+* **Multi-Environment Applications Dashboard**: Tracks `dev` and `prod` sync status (`./argocd-apps-overview.png`).
+* **Production High-Availability Topology**: Shows Kustomize scaling production to 3 replicas versus 1 in dev (`./argocd-prod-tree.png`).
+  
 ## 📂 Repository Directory Breakdown
 
 * **/base**: The structural foundation templates (`Deployment`, `Service`) shared globally by all runtime scopes.
